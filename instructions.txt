@@ -1,0 +1,51 @@
+✔ Define a structure Book with the following data members:
+array of character for ISBN, title,author, integer members year published and copies available. 
+
+Define and implement the following functions: 
+✔ Function to add a new book to the library. ISBN must be unique 
+void addBook(Book books[], int *count,Book newBook); 1
+
+✔ Function to search for a book an author/s 
+int searchAuthor(char author[], Book books[], int count); 1
+ 
+✔ Function to search for a book/s 
+int searchBook(char title[], Book books[], int count); 1
+
+ Function to display the list of books by publication year 
+void displayBooksByYear(Book books[], int count); 
+
+ Function to update book. If isbn is not existing, display "<<ISBN>> is not existing." Ask the user to "Do you want to add this book?[Y/N]", if the answer is yes add the book 
+void updateBook(Book books[], int *count, Book updateBook);
+
+ Function to delete book/s with the title. If title is not existing display an error message 
+void deleteBook(char title[], Book books[], int *count); 
+
+ Function checks if a book is available for borrowing. It should return 1 if the title is available otherwise return zero 
+int isBookAvailable(char title[], Book books[], int count); 
+
+typedef struct BorrowedBook { 
+	struct Book book; // Original book information (title, author, etc.) 
+	char username[50]; // Username the borrower 
+	char dueDate[12]; // Due date for returning the book (e.g., yyyy-mm-dd) 
+	char borrowedDate[12]; // Date the book was borrowed 
+	float lateFee; // Late fee (if applicable) 
+}; 
+
+ Function checks if the book exists in the library. If the book is found and available, ask the the due date and borrowed date. Then update the copies available in the library, record the borrowed book in the borrow array, and increment the count of borrowed books. 
+void borrowBook(char title[], Book books[], int *count,char username[] ,Borrowed borrow[], int *countBorrowed); 
+
+ Function checks if the book exists in the library.If it does not exist display an error message. If the book is found checks if the book is borrowed. If its borrowed then update the copies available in the library, remove the the borrowed book in the borrow array, and decrement the count of borrowed books. 
+void returnBook(char title[], Book books[], int *count, Borrowed borrow[], int *countBorrowed); 
+
+in main.c 
+Main.c 
+1 - Add new book 
+2 - Search by Author 
+3 - Search by Book 
+4 - Display books by year 
+5 - Update book 
+6 - Delete book 
+7 - Available book 
+8 - Borrow 
+9 - Return 
+10 - Exit Project Name: YourFamilyNameArrayStructure Folder: Midterm\Exercises\Act01
