@@ -1,70 +1,156 @@
-#include "books.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include "books.h"
 
-int searchAuthor(char author[], Book books[], int count) {
-  int i, ctr = 0;
-
-  for (i = 0; i < count; i++) {
-    if (strcmp(books[i].author, author) == 0)
-      ctr++;
-  }
-
-  return ctr++;
+void addBook(Book books[], int *count, Book newBook)
+{
+    if (strcmp(books[*count].ISBN, newBook.ISBN) == 0)
+        printf("Book already exists, try adding another book.\n");
+    else
+    {
+        books[*count] = newBook;
+        (*count)++;
+    }
 }
 
-int searchBook(char title[], Book books[], int count) {
-  int i, num = 0;
+int searchAuthor(char author[], Book books[], int count)
+{
+    int i, ctr = 0;
 
-  for (i = 0; i < count; i++) {
-    if (strcmp(books[i].title, title) == 0)
-      num++;
-  }
+    for (i = 0; i < count; i++)
+    {
+        if (strcmp(books[i].author, author) == 0)
+            ctr++;
+    }
 
-  return num;
+    return ctr;
 }
 
-int compareDates(const void *a, const void *b) {
-  const Book *date1 = (const Book *)a;
-  const Book *date2 = (const Book *)b;
+int searchBook(char title[], Book books[], int count)
+{
+    int i;
 
-  return strcmp(date1->datePublished, date2->datePublished);
+    for (i = 0; i < count; i++)
+    {
+        if (strcmp(books[i].title, title) == 0)
+            return 1;
+    }
+
+    return 0;
 }
 
-void addBook(Book books[], int *count, Book newBook) {
+void displayBooksByYear(Book books[], int count)
+{
+    int i, j, isUnique, uniqueYears[count], uniqueCtr = 0;
+    // uniqueYears is an array that will store the years that are unique
 
-  if (strcmp(books[*count].id, newBook.id) == 1)
-    printf("Book already exists.\n");
-  else
-    books[*count] = newBook;
+    // this for loop checks for all unique years and stores them in an array
+    for (i = 0; i < count; i++)
+    {
+        // isUnique is always 1 (true) unless the current yearPublished is == to at least one member of uniqueYears
+        isUnique = 1;
+        for (j = 0; j < uniqueCtr; j++)
+        {
+            if (books[i].yearPublished == uniqueYears[j])
+            {
+                isUnique = 0;
+                break;
+            }
+        }
 
-  (*count)++;
+        // only adds years to the uniqueYears array if isUnique is true
+        if (isUnique == 1)
+        {
+            uniqueYears[uniqueCtr] = books[i].yearPublished;
+            uniqueCtr++;
+        }
+    }
+
+    for (i = 0; i < uniqueCtr; i++)
+    {
+        printf("%d:\n", uniqueYears[i]);
+        for (j = 0; j < count; j++)
+        {
+            // function call to print the books by year in order
+            uniqueOrder(books, uniqueYears, i, j);
+        }
+        printf("\n");
+    }
 }
 
-void display(Book books[], int count) {
-  int i;
+void updateBook(Book books[], int *count, Book updateBook)
+{
+    int i, bookFound = 0;
+    // bookFound to check if book was added successfully
+    char confirmation;
+    for (i = 0; i < (*count); i++)
+    {
+        if (strcmp(books[i].ISBN, updateBook.ISBN) == 0)
+        {
+            books[i] = updateBook;
+            bookFound = 1;
+            break;
+        }
+    }
 
-  for (i = 0; i < count; i++) {
-    printf("\n");
-    printf("Book id: %s\n", books[i].id);
-    printf("Book title: %s\n", books[i].title);
-    printf("Book author: %s\n", books[i].author);
-    printf("Book publishing date: %s\n", books[i].datePublished);
-    printf("Book number of copies: %d\n\n", books[i].copies);
-  }
+    if (bookFound)
+        printf("Book updated successfully\n\n");
+    else
+    {
+        printf("%s does not exist. Do you want to add this book instead? [y/n] ", updateBook.ISBN);
+        scanf(" %[^\n]c", &confirmation);
+        confirmation = toupper(confirmation);
+        // reuses the addBook function if user inputs Y and adds a book at the last index
+        if (confirmation == 'Y')
+            addBook(books, count, updateBook);
+        else
+            printf("Update/add failed.\n");
+    }
 }
 
-void displayBooksByYear(Book books[], int count) {
-  int i;
+void deleteBook(Book books[], int *count, char title[])
+{
+    int i;
+    for (i = indexViaTitle(title, books, (*count)); i < (*count); i++)
+    {
+        books[i] = books[i + 1];
+    }
 
-  qsort(books, count, sizeof(Book), compareDates);
-  for (i = 0; i < count; i++) {
-    printf("\n");
-    printf("Book id: %s\n", books[i].id);
-    printf("Book title: %s\n", books[i].title);
-    printf("Book author: %s\n", books[i].author);
-    printf("Book publishing date: %s\n", books[i].datePublished);
-    printf("Book number of copies: %d\n\n", books[i].copies);
-  }
+    (*count)--;
+}
+
+int isBookAvailable(char title[], Book books[], int count)
+{
+    int i;
+    for (i = 0; i < count; i++)
+    {
+        if (strcmp(books[i].title, title) == 0)
+        {
+            if (books[i].copies == 0)
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+void uniqueOrder(Book books[], int uniqueYears[], int i, int j)
+{
+    // prints the arrays by yearPublished
+    if (books[j].yearPublished == uniqueYears[i])
+    {
+        printf("%s: %s by %s\n", books[j].ISBN, books[j].title, books[j].author);
+    }
+}
+
+int indexViaTitle(char title[], Book books[], int count)
+{
+    int i;
+    for (i = 0; i < count; i++)
+    {
+        if (strcmp(books[i].title, title) == 0)
+            return i;
+    }
 }

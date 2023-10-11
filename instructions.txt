@@ -2,16 +2,16 @@
 array of character for ISBN, title,author, integer members year published and copies available. 
 
 Define and implement the following functions: 
-✔ Function to add a new book to the library. ISBN must be unique 
-void addBook(Book books[], int *count,Book newBook); 1
+ Function to add a new book to the library. ISBN must be unique 
+void addBook(Book books[], int *count,Book newBook); 
 
 ✔ Function to search for a book an author/s 
-int searchAuthor(char author[], Book books[], int count); 1
+int searchAuthor(char author[], Book books[], int count); 
  
-✔ Function to search for a book/s 
-int searchBook(char title[], Book books[], int count); 1
+ Function to search for a book/s 
+int searchBook(char title[], Book books[], int count); 
 
- Function to display the list of books by publication year 
+✔ Function to display the list of books by publication year 
 void displayBooksByYear(Book books[], int count); 
 
  Function to update book. If isbn is not existing, display "<<ISBN>> is not existing." Ask the user to "Do you want to add this book?[Y/N]", if the answer is yes add the book 
@@ -48,4 +48,5 @@ Main.c
 7 - Available book 
 8 - Borrow 
 9 - Return 
-10 - Exit Project Name: YourFamilyNameArrayStructure Folder: Midterm\Exercises\Act01
+10 - Exit 
+Project Name: YourFamilyNameArrayStructure Folder: Midterm\Exercises\Act01
