@@ -16,14 +16,19 @@ typedef struct
     float lateFee;
 } BorrowedBook;
 
-void addbook(Book books[], int *count, Book newBook);
+void addBook(Book books[], int *count, Book newBook);
 int searchAuthor(char author[], Book books[], int count);
 int searchBook(char title[], Book books[], int count);
 void displayBooksByYear(Book books[], int count);
 void updateBook(Book books[], int *count, Book updateBook);
 void deleteBook(Book books[], int *count, char title[]);
 int isBookAvailable(char title[], Book books[], int count);
-void borrowBook(char title[], Book books[], int *count, char username[], BorrowedBook borrow[], int *countBorrowed);
-void returnBook(char title[], Book books[], int *count, BorrowedBook borrow[], int *countBorrowed);
+void borrowBook(char title[], Book books[], int count, char username[], BorrowedBook borrow[], int *countBorrowed);
+void returnBook(char title[], Book books[], int count, BorrowedBook borrow[], int *countBorrowed);
+
+// additional methods not required by the activity
+int getIndex(Book books[], int count, char title[]);
+int getBorrIndex(BorrowedBook borrow[], int **countBorrowed, char title[], char username[]);
+int checkBorrow(BorrowedBook borrow[], int **countBorrowed, char title[]);
 void uniqueOrder(Book books[], int uniqueYears[], int i, int j);
-int indexViaTitle(char title[], Book books[], int count);
+void deleteBorrowed(BorrowedBook borrow[], int **countBorrowed, int at);

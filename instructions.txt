@@ -31,10 +31,10 @@ typedef struct BorrowedBook {
 	float lateFee; // Late fee (if applicable) 
 }; 
 
- Function checks if the book exists in the library. If the book is found and available, ask the the due date and borrowed date. Then update the copies available in the library, record the borrowed book in the borrow array, and increment the count of borrowed books. 
+✔ Function checks if the book exists in the library. If the book is found and available, ask the the due date and borrowed date. Then update the copies available in the library, record the borrowed book in the borrow array, and increment the count of borrowed books. 
 void borrowBook(char title[], Book books[], int *count,char username[] ,Borrowed borrow[], int *countBorrowed); 
 
- Function checks if the book exists in the library.If it does not exist display an error message. If the book is found checks if the book is borrowed. If its borrowed then update the copies available in the library, remove the the borrowed book in the borrow array, and decrement the count of borrowed books. 
+✔ Function checks if the book exists in the library.If it does not exist display an error message. If the book is found checks if the book is borrowed. If its borrowed then update the copies available in the library, remove the the borrowed book in the borrow array, and decrement the count of borrowed books. 
 void returnBook(char title[], Book books[], int *count, Borrowed borrow[], int *countBorrowed); 
 
 in main.c 
