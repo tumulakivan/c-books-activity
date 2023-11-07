@@ -282,4 +282,6 @@ void deleteBorrowed(BorrowedBook borrow[], int **countBorrowed, int at)
 
     for (i = at; i < **countBorrowed; i++)
         borrow[i] = borrow[i + 1];
+
+    (**countBorrowed)--;
 }
